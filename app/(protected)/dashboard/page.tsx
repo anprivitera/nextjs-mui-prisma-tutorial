@@ -1,9 +1,9 @@
 import styles from './page.module.css'
 
-export default function Home() {
+export default function DashboardPage() {
   return (
     <main className={styles.main}>
-      Main Page
+      Dashboard Page
     </main>
   )
 }
