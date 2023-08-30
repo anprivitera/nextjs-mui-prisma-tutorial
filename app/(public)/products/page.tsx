@@ -1,11 +1,7 @@
-import styles from '../page.module.css'
-import ResponsiveAppBar from '../responsive-app-bar'
-
-export default function Products() {
+export default function Home() {
   return (
-    <main className={styles.main}>
-      <ResponsiveAppBar />
+    <>
       Products Page
-    </main>
+    </>
   )
 }
