@@ -1,9 +1,11 @@
 import styles from './page.module.css'
+import ResponsiveAppBar from './responsive-app-bar'
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      Main Page
+      <ResponsiveAppBar />
+      Home Page
     </main>
   )
 }
