@@ -1,5 +1,4 @@
-Developing a WebApp using NextJS 13 & Material UI
--------------------------------------------------
+# Developing a WebApp using NextJS 13 & Material UI
 
 [#React, NodeJS, NextJS, Material UI](/tags/#React, NodeJS, NextJS, Material UI)    
   
@@ -11,8 +10,7 @@ This tutorial shows how to set up a project and build a home page skeleton using
 
 [MUI](https://mui.com/) offers a comprehensive suite of free UI tools to help you ship new features faster. Learning MUI is an exercise of selecting an existing example of their amazing [components library](https://mui.com/material-ui/getting-started/), copying the code, and customizing them for the app purposes. An [AppBar](https://mui.com/material-ui/react-app-bar/) component is used to build a simple home page skeleton with responsive menu and links.
 
-1\. Create new NextJS project
------------------------------
+## 1. Create new NextJS project
 
 [https://nextjs.org/docs/getting-started/installation](https://nextjs.org/docs/getting-started/installation)
 
@@ -74,7 +72,9 @@ Commit the changes
 
 ### 1.2. Create different Route Groups for protected and public pages
 
-[https://nextjs.org/docs/app/building-your-application/routing/route-groups](https://nextjs.org/docs/app/building-your-application/routing/route-groups)
+In Next.js, you can organize folders so that you can exclude them from the URL path. More information here: [https://nextjs.org/docs/app/building-your-application/routing/route-groups](https://nextjs.org/docs/app/building-your-application/routing/route-groups) 
+
+Here is how we are going to separate protected files and public pages in our project.
 
 #### 1.2.1. Protected Route Group
 
@@ -86,7 +86,7 @@ The `(protected)` route group will host a Dashboard-like app only accessible aft
     cp app/page* app/\(protected\)/dashboard
     
 
-Now edit the Dashboard page to:
+Now edit the Dashboard page in the subfolder you just created to:
 
     export default function DashboardPage() {
       return (
@@ -114,8 +114,7 @@ Commit.
     git commit -m "Created (protected) and (public) route groups"
     
 
-2\. Set up Material UI dependencies
------------------------------------
+## 2\. Set up Material UI dependencies
 
 [https://mui.com/material-ui/getting-started/installation/](https://mui.com/material-ui/getting-started/installation/)
 
@@ -133,7 +132,7 @@ Import the MUI Baseline
     import CssBaseline from '@mui/material/CssBaseline'
     
 
-Then and the `<CssBaseline>` component to the page layout:
+Then add the `<CssBaseline>` component to the page layout:
 
     <html lang="en">
       <CssBaseline />
@@ -144,7 +143,7 @@ Then and the `<CssBaseline>` component to the page layout:
     git commit -am "Added CssBaseline"
     
 
-### 2.2. Import the Roboto font
+### 2.2 Import the Roboto font
 
 In the `app.layout.tsx`, replace the Inter font:
 
@@ -174,7 +173,10 @@ Commit
     
 
 3\. Build a simple Home page using MUI AppBar with responsive menu
-------------------------------------------------------------------
+
+## 3.1. Responsive App Bar
+
+Now let's import a responsive bar into our site. We can find it here:
 
 [https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu](https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu)
 
@@ -201,16 +203,18 @@ This error will happen when you open the home page:
     Read more: https://nextjs.org/docs/messages/react-client-hook-in-server-component
     
 
-In NextJS 13, by default, the pages are rendered in the server side for each request. Client-side code, like React State Management logic and client-side event handlers, runs only in the browser. A quick-and-ugly workaround: simply add this directive to the top of the app bar component.
+In NextJS 13, by default, the pages are rendered in the server side for each request. Client-side code, like React State Management logic and client-side event handlers, runs only in the browser. 
+
+There is a quick-and-ugly workaround to this issue: we can simply add this directive to the top of the app bar component.
 
     "use client"
     
 
 ![home-app-bar.png](assets/img/posts/2023-08-28-home-app-bar.png)
 
-However, we can better use the capabilities of NextJS 13 by isolating the client components, in a way that most of the page structure can be rendered in the server side, letting only the client-side code to be hydrated when the browser renders the DOM.
+However, we can better use the capabilities of NextJS 13 by isolating the client components, in a way that most of the page structure can be rendered in the server side. This way, only the client-side code will be hydrated when the browser renders the DOM.
 
-### Extract client components
+### 3.2 Extract client components
 
 The client components are those who implement some sort of interactive behaviors. It’s easy to spot them on the code: you only need to comment out the State Management and the event handlers codes:
 
@@ -232,9 +236,9 @@ The client components are those who implement some sort of interactive behaviors
       // }
     
 
-After commenting out these lines VS Code will display errors in the buttons, menus, and tooltips components. Now we can extract them to client components files. Following you can see the final structure of the components. For convenience, the CSS related codes were also extracted to `app/(public)/page.module.css`.
+After commenting out these lines VS Code will display errors in the buttons, menus, and tooltips components. 
 
-### 3.1. Responsive App Bar
+To solve these errors let's extract each of these components into individual client components files. Following you can see the final structure of the components. For convenience, we'll also extract the CSS related codes to `app/(public)/page.module.css`.
 
 This file won’t depend on the `"use client"` directive anymore.
 
@@ -273,7 +277,7 @@ This file won’t depend on the `"use client"` directive anymore.
     }
     
 
-### 3.2. Collapsible Menu
+### 3.3 Collapsible Menu
 
     "use client"
     
@@ -355,7 +359,7 @@ This file won’t depend on the `"use client"` directive anymore.
     }
     
 
-### 3.3. Settings Menu
+### 3.4 Settings Menu
 
     "use client"
     
@@ -409,7 +413,7 @@ This file won’t depend on the `"use client"` directive anymore.
     }
     
 
-### 3.4. page.module.css
+### 3.5 page.module.css
 
     .main {
       margin: 0 auto;
@@ -433,8 +437,7 @@ This file won’t depend on the `"use client"` directive anymore.
     }
     
 
-4\. Products and Pricing pages
-------------------------------
+## 4\. Products and Pricing pages
 
 Now let’s add more pages. First we need to link the Collapsible Menu buttons to these pages:
 
@@ -516,7 +519,7 @@ Commit
 
 ### 4.3. Extracting the Home layout
 
-You can see we’re copying and pasting most of the code. In order to avoid it, we can create an `app/(public)/layout.tsx` component to centralize all the repetitive code. This internal layout component will nest inside the outer layout component at `app/layout.tsx` where we had set up the font and the CSS Base line. This is a useful technique to compose complex layout structures.
+You can see we’re copying and pasting quite a lot of code. Luckily there is a more efficient way to handle things. We can create an `app/(public)/layout.tsx` component to centralize all the repetitive code. This internal layout component will nest inside the outer layout component at `app/layout.tsx` where we had set up the font and the CSS Base line. This is a useful technique to compose complex layout structures.
 
 #### Layout
 
@@ -570,8 +573,7 @@ You can see we’re copying and pasting most of the code. In order to avoid it, 
     }
     
 
-5\. Conclusion
---------------
+## 5\. Conclusion
 
 This introductory article presented a step-by-step guide to
 
