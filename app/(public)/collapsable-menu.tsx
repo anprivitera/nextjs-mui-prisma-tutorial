@@ -8,8 +8,11 @@ import { Adb } from "@mui/icons-material"
 
 import styles from './page.module.css'
 
-const pages = ['Products', 'Pricing', 'Blog']
-
+const pages = {
+  Products: '/products',
+  Pricing: '/pricing',
+  Blog: 'https://blog.example.com',
+}
 export default function CollapsableMenu() {
   const [anchorElNav, setAnchorElNav] =
     useState<null | HTMLElement>(null)
@@ -44,13 +47,17 @@ export default function CollapsableMenu() {
           onClose={handleCloseNavMenu}
           keepMounted
         >
-          {
-            pages.map((page) => (
-              <MenuItem key={page} onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">{page}</Typography>
+          {Object.entries(pages).map(
+            ([page, href]) => (
+              <MenuItem key={page}>
+                <Typography textAlign="center">
+                  <Link href={href} underline="none" color="inherit">
+                    {page}
+                  </Link>
+                </Typography>
               </MenuItem>
-            ))
-          }
+            )
+          )}
         </Menu>
       </Box>
       <Adb sx={ { display, mr: 1 } } />
@@ -65,9 +72,13 @@ export default function CollapsableMenu() {
         LOGO
       </Typography>
       <Box sx={ { flexGrow: 1, display: { xs: 'none', md: 'flex' } } }>
-        {
-          pages.map((page) => (
-            <Button key={page} sx={ { my: 2 } } className={styles.appLink}>
+      {Object.entries(pages).map(
+          ([page, href]) => (
+            <Button
+              key={page}
+              href={href}
+              sx=
+            >
               {page}
             </Button>
           ))
